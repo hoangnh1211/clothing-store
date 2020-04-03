@@ -1,0 +1,22 @@
+.order{
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+
+.order b {
+    margin-right: 100px;
+}
+.order input{
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+.t_2:hover{
+    color: tomato;
+}
+.t_3{
+    color:tomato
+}
+.t_3:hover{
+    color: tomato;
+}

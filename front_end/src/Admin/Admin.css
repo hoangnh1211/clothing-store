@@ -1,0 +1,37 @@
+.nav1{
+    width: 256px;
+    position: fixed;
+    top:80px;
+    bottom: 0px;
+    background: #3c4b64;
+    color: rgba(255,255,255,.8);
+}
+.cac{
+    
+    padding-top:80px;
+}
+.headeradmin{
+    position: fixed;
+    width: 80px;
+}
+.nav1 ul{
+padding: 0px;
+margin: 0px;
+}
+.nav1 li{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 10%;
+    list-style-type:none;
+    color: cornsilk;
+    font-size: 16px;
+}
+.nav1 li a{
+    color: cornsilk;
+}
+.nav1 li i{
+    padding-right: 10%;
+}
+.nav1 li:hover{
+    background: #321fdb;
+}

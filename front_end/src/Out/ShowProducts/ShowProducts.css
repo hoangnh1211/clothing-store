@@ -1,0 +1,71 @@
+.shirt{
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+.flex-container{
+    flex-direction: row;
+}
+
+.size-20{
+    font-size: 20px;
+}
+.color-darkgray{
+    color: darkgray;
+}
+.color-black{
+    color: black;
+}
+.shirt_page{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.shirt_button_page{
+    display: flex;
+    padding:5px 10px;
+    /* margin: 10px; */
+    font-size: 20px;
+}
+.shirt span{
+    text-align: right;
+}
+.pagelink{
+    min-width: 30px;
+    max-width: 30px;
+    padding: 5px;
+    border: 1px solid #dbdbdb;
+    margin: 2px;
+    text-align: center;
+    border-radius: 4px;
+}
+.pagelink a{
+    text-align: center;
+    width: 100%;
+}
+.page .col{
+    padding: 0px;
+    flex-wrap: wrap;
+    display: flex;
+}
+li {
+    display: list-item;
+    list-style: none;
+    display: flex;
+    text-align: center;
+}
+.page{
+    align-items: center;
+}
+.page ul{
+    margin: 0px;
+}
+.pagelink:hover{
+    border: 1px solid gray;
+}
+.pagelink_click{
+    background-color: greenyellow;
+}
+.pagelink_click a{
+    color: white;
+}

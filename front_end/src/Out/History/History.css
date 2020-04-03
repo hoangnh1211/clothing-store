@@ -1,0 +1,18 @@
+.t_right{
+    text-align: right;
+}
+.t_1{
+    margin-bottom: 50px;
+}
+.t_1 b {
+    margin-right: 100px;
+}
+.t_2:hover{
+    color: tomato;
+}
+.t_3{
+    color:tomato
+}
+.t_3:hover{
+    color: tomato;
+}

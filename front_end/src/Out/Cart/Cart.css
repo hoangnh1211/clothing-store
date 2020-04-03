@@ -1,0 +1,77 @@
+.cart{
+    margin-top: 50px;
+}
+.tb{
+    border: 1px solid gainsboro;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+.tb1{
+    border: 1px solid gainsboro;
+}
+.tb1top{
+    margin-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    border-bottom: 1px solid gainsboro;
+}
+p{margin: 0px;}
+.cart-button{
+    border: 1px solid black;
+    background-color: white;
+    padding: 10px 15px;
+}
+.cart-button:hover{
+    /* background-color: black; */
+    color: white;
+}
+.c{
+    padding-left:2px ;
+    padding-right:2px ;
+}
+.clear{
+    text-align: left   ;
+}
+
+.tb2{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px 15px;
+    border: 2px solid gainsboro;
+    text-align: right;
+}
+.clear h5:hover{
+    color: rgb(235, 77, 77);
+}
+.clear h6{
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.clear p{
+    padding-left: 100px;
+}
+.ca-button{
+    margin-top: 30px;
+    width: 100%;
+    border: 1px solid black;
+    background-color: white;
+    padding: 10px 15px;
+    
+}
+.ca-button:hover{
+    /* background-color: black; */
+    color: white;
+}
+.t1t1{
+    margin: 0 auto;
+}
+.t1t1 input{
+    width: 100%;
+}
+.t1t1 div{
+    /* left: 50%;  */
+    top: 35%;
+}
+.t1t1 i:hover{
+    color: gainsboro;
+}

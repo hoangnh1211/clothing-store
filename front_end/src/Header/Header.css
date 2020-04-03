@@ -1,0 +1,195 @@
+.header-bottom{
+    /* margin: 0px; */
+    margin-left:15% ;
+    margin-right: 15%;
+}
+.header-bottom .col-3,.header-bottom .col-9{
+    padding: 0px;
+}
+/* .row{
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+} */
+.container{
+    /* margin-right: 10px; */
+    /* min-width: 1330px; */
+    max-width: 1270px;
+}
+.center{
+    text-align: center;
+}
+input:focus {
+    outline: 0;
+    box-shadow: none;
+    }
+
+.border-bottom1{
+    border-bottom: 2px solid #212529!important;
+}
+.formsearch{
+    height: 40px;
+}
+.grey{
+    color: gray;
+}
+.button-search{
+    padding: 0px;
+}
+.left{
+    text-align: right;
+}
+.size50{
+    font-size: 50px;
+}
+.logo{
+    width: 350px ;
+    height: 75px;
+}
+.button{
+    background-color: cornsilk;
+}
+.shop{
+/* padding-left:100px ; */
+text-align: right;
+padding-right: 0px;
+cursor:pointer;
+}
+.cu{
+    cursor:pointer;
+}
+.cu:hover{
+    color:#fc7070 ;
+}
+.shop-div{
+    width: 100%;
+    padding: 0px;
+}
+.shop-div-p{
+    margin-bottom:1px ;
+    color: rgb(172, 161, 161);
+}
+.aa a{
+    color:white;
+}
+.aa a:hover{
+    color: red;
+}
+.login{
+    padding-top: 40px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: -100px;
+}
+.login div input{
+    width: 300px;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+.login button{
+    width: 300px;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+    border-radius: 100px;
+}
+.p{
+    margin-top: 20px;
+ 
+}
+.login button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+.borderinput{
+    border: none;
+    border-bottom: 1px solid gainsboro;
+}
+.borderinput:focus{
+    border-bottom: 1px solid black;
+}
+
+.shop-value{
+    /* margin-top: -60px; */
+    /* margin-left: 100px; */
+    /* margin-right: -10px; */
+    min-width: 20px;
+    background-color:#fc7070 ;
+    color: white;
+    text-align: center;
+    padding: 3px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+.shop .col-4{
+    padding-left: 20px;
+
+    text-align: left;
+}
+.shop:hover .shop-div-p{
+    color: tomato;
+}
+.header-top{
+    background-color: black; 
+    color: cornsilk;
+    text-align: right;
+    margin-bottom: 30px;
+}
+.bordersearch{
+    border:1px solid rgb(83, 83, 206) ;
+    padding: 0px;
+    margin-left: -15px;
+    margin-top: -5px;
+}
+.bordersearch p{
+    margin: 0px;
+    padding-left: 5px;
+}
+.bordersearch p:hover{
+    background-color: rgb(83, 83, 206);
+    color: white;
+}
+.space-left{
+    margin:10px;
+    margin-left: 0px ;
+}
+.space-right{
+    margin:10px;
+    margin-right: 0px;
+}
+.space-right :hover{
+    color: red;
+}
+.aa{
+    cursor:pointer;
+}
+.aa p{
+    margin:0px;
+}
+.aa:hover{
+    color: red;
+}
+.color{
+    color:cornsilk;
+}
+.flex-container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+.abc{
+    margin-left:15% ;
+    margin-right:15% ;
+}
+a {
+    color: black;
+    text-decoration: none;
+}
+a:hover {
+    color: black;
+    text-decoration: none;
+
+}

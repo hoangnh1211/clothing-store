@@ -1,0 +1,123 @@
+.navbar1 {
+  overflow: hidden;
+  color: black;
+  padding-left: 23%;
+  padding-right: 23%;
+  /* border-bottom: black; */
+  border-bottom: 1px solid black;
+  /* position: fixed; */
+  /* top: 0; */
+  /* width: 100%; */
+  /* position: initial; */
+}
+
+.navbar2 {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  
+  /* position: initial; */
+}
+.navbar2 .subnav .subnav-content{
+  position: fixed;
+  top:60px;
+ 
+}
+.row{
+  margin: 0px;
+  padding: 0px;
+}
+.navbar1 a {
+  float: left;
+  font-size: 16px;
+  color:black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.img1{
+  width: 100%;
+}
+.subnav {
+  float: left;
+  overflow: hidden;
+  /* position: relative; */
+  padding-left:15px;
+  padding-right: 15px;
+}
+.subnav img{
+  /* width: 100%; */
+}
+.size25{
+  
+}
+ .subnav .subnavbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: black;
+  /* padding: 14px 16px; */
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+  z-index: 100000000;
+ 
+}
+
+.navbar1 a:hover, .subnav:hover .subnavbtn {
+  
+}
+.size25:hover{
+  color: crimson;
+}
+.subnav-content {
+  box-shadow: 1px 1px 1px 2px rgb(184, 174, 174);
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid gray;
+  margin-top: -12px;
+  /* width: 100%; */
+
+  z-index: 10000000;
+  left:20% ;
+  right: 20%;
+  /* padding-left: 300px ; */
+  padding-top: 50px ;
+  padding-bottom: 20px ;
+  box-shadow: horizontal-offset vertical-offset blur-radius spread-radius color;
+}
+.abcd pre{
+  font-size: 18px;
+}
+.abcd {
+  margin-left: 160px;
+  width: 100%;
+  text-align: left;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  content: "\f068";
+}
+.abc1 {
+  margin-left: 100px;
+  text-align: left;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.abcd:hover {
+  color:red;
+  margin-left: 190px;
+  transition: 2s;
+  content: "\f068";
+}
+
+.subnav:hover .subnav-content {
+  display: block;
+}

@@ -1,0 +1,16 @@
+.shirt{
+    margin-top: 10px;
+}
+.flex-container{
+    display: flex;
+  flex-wrap: wrap;
+}
+.size-20{
+    font-size: 20px;
+}
+.color-darkgray{
+    color: darkgray;
+}
+.color-black{
+    color: black;
+}

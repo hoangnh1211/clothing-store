@@ -1,0 +1,15 @@
+.infor div button{
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.infor{
+    padding-top: 30%;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+textarea{
+    resize: none;
+}
