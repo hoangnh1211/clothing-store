@@ -34,7 +34,7 @@ class Products extends Component{
         axios.post("/getproduct",{link:match.params.name}).then(
             res=>{
                 console.log(res.data[0])
-                if (res.data[0]!==undefined){
+                if (res.data[0]!==undefined && res.data[0].active===1){
                     this.setState({
                         data:res.data[0],sl:res.data[0].sizeS  ,loading:1  
                     });

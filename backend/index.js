@@ -93,7 +93,7 @@ app.get('/products', function (req, res) {
 });
 app.post("/getproduct",function(req,res){
     var link=req.body.link;
-    sequelize.query("select Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id where Link='"+link+"'", { type: sequelize.QueryTypes.SELECT})
+    sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id where Link='"+link+"'", { type: sequelize.QueryTypes.SELECT})
     .then(user=>{
         res.send(user)
     })
