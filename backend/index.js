@@ -85,7 +85,7 @@ app.post('/datageneral', function (req, res) {
 });
 
 app.get('/products', function (req, res) {
-    sequelize.query("select Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id ;", { type: sequelize.QueryTypes.SELECT})
+    sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id ;", { type: sequelize.QueryTypes.SELECT})
     .then(users => {
     // console.log(users)
     res.send(users)
@@ -560,6 +560,14 @@ app.post("/deleteP",(req,res)=>{
     sequelize.query("delete from Products where id="+body.id+"; delete from kho where id="+body.id+";")
     res.send("thang cong")
     
+})
+app.post("/activeP",(req,res)=>{
+    var body=req.body;
+    console.log(body)
+    var active=Math.abs(body.active-1);
+    sequelize.query("update Products set active="+active+" where id="+body.id)
+    res.send("thanh cong")
+
 })
 app.post('/update', (req, res)=> {
     body=req.body;

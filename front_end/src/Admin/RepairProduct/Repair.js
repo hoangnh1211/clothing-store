@@ -9,7 +9,7 @@ class Repair extends Component{
         super(props);
         this.state = {
             data:[],
-            name:'',loading:0
+            name:'',loading:0,class:[]
         };
       }
       componentDidMount() {
@@ -39,12 +39,42 @@ class Repair extends Component{
         })
         console.log(id,link)
     }
+    active(id,active,index){
+        axios.post("/activeP",{id:id,active:active})
+        .then(res=>{
+            axios.get('/products')
+                .then(res=>{
+                console.log(res.data);
+                this.setState({
+                    data:res.data,loading:1
+                });
+                })
+                
+            }
+        )
+    }
     Show = (menus) => {
         var result = null;
         if (menus.length > 0) {
             result = menus.map((menu, index) =>{
+                var a=this.state.class
                 var link=menu.Link+"_1"
-                // var name=this.props.to;
+                
+                if (menu.active===1){
+                    if (a[index]!=="fas fa-pause"){
+                        a[index]="fas fa-pause"
+                        this.setState({
+                            class:a
+                        })
+                    }
+                } else {
+                    if (a[index]!=="fas fa-play"){
+                        a[index]="fas fa-play"
+                        this.setState({
+                            class:a
+                        })
+                    }
+                }
                 var anh ='http://localhost:4000/anh/' + link;
                 // var anhhover='http://localhost:4000/anh/'+menu.Link+"_3";
                 return(
@@ -56,13 +86,13 @@ class Repair extends Component{
                                 {/* <img className="img1"alt="anh" src={anhhover}></img> */}
                                     <div className="infor">
                                         <div>
-                                            <button><a href={`/admin/repairproduct/${menu.Link}`}  ><i class="fas fa-cog"></i></a></button>
+                                            <button><a href={`/admin/repairproduct/${menu.Link}`}  ><i className="fas fa-cog"></i></a></button>
                                         </div>
                                         <div>
-                                            <button onClick={()=>this.deleteP(menu.id,menu.Link)}><i class="fas fa-trash-alt"></i></button>
+                                            <button onClick={()=>this.deleteP(menu.id,menu.Link)}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                         <div>
-                                            <button><i class="fas fa-pause"></i></button>
+                                            <button onClick={()=>this.active(menu.id,menu.active,index)}><i className={this.state.class[index]}></i></button>
                                         </div>
                                     </div>
                                 </div>

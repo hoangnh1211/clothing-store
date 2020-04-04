@@ -47,7 +47,7 @@ class Search extends Component{
         if (menus.length > 0) {
             result = menus.map((menu, index) =>{
                 var link=menu.Link+"_1"
-                if (index>=(currentPage-1)*this.state.newsPerPage && index <= currentPage*this.state.newsPerPage-1)
+                if (index>=(currentPage-1)*this.state.newsPerPage && index <= currentPage*this.state.newsPerPage-1 && menu.active)
                 return(
                     <Frame match={match.match} className="flex-left" anh={link} ten={menu.Name} giamoi={menu.NewPrice} giacu={menu.Price} to={menu.Link}>  </Frame>
                 )
