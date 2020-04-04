@@ -10,8 +10,8 @@ class Header extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      chua:"abc",
-      roi:"abc none",
+      chua:"container",
+      roi:"container none",
       user:'',
       a:"",
       order:[],
@@ -49,10 +49,10 @@ class Header extends Component {
     axios.get('/test1')
     .then(res=>{
       if (res.data!=="chua dang nhap"){
-        this.setState({user:res.data,chua:'abc none', roi:'abc'})
+        this.setState({user:res.data,chua:'container none', roi:'container'})
         console.log(res.data);
       } else {
-        this.setState({user:res.data,chua:'abc', roi:'abc none'})
+        this.setState({user:res.data,chua:'container', roi:'container none'})
         // console.log(res.data);
       }
     })
@@ -153,7 +153,7 @@ Show = (menus,name) => {
           </span>
         </div>
       </div>
-      <div className="header-bottom">
+      <div className="container">
         <div className="row ">
           <div className="col-6">
             <a href="/"><img src="http://localhost:4000/logo"  className="logo" alt="a"></img></a>

@@ -372,8 +372,8 @@ let diskStorage = multer.diskStorage({
 
 app.post('/addproduct',(req,res)=>{
     var body=req.body;
-    // console.log(body)
-    sequelize.query("insert into Products values (N'"+body.Name+"',"+body.Price+","+body.NewPrice+",'"+body.Link+"',N'"+body.Description+"','"+body.name_kodau+"')")
+    console.log(body)
+    sequelize.query("insert into Products values (N'"+body.Name+"',"+body.Price+","+body.NewPrice+",'"+body.Link+"',N'"+body.Description+"','"+body.name_kodau+"',1)")
     res.send("thanhcong")
 })
 app.post('/addkho',(req,res)=>{
@@ -384,6 +384,29 @@ app.post('/addkho',(req,res)=>{
         sequelize.query("insert into kho values ("+users[0].id+","+body.slS+","+body.slM+","+body.slL+")")
     })
     res.send("thanhcong")
+})
+app.post("/addimg1",(req,res)=>{
+    // console.log(req)
+    uploadFile(req, res, (error) => {
+        // Nếu có lỗi thì trả về lỗi cho client.
+        // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
+        // if (error) {
+        //   return res.send(`Error when trying to upload: ${error}`);
+        // }
+        console.log(req.files)
+        
+        req.files.map((menu, index) => {
+            var length=menu.filename.length;
+            var link="/anh/"+menu.filename.slice(0,length-3)
+            var link1="/anh/"+menu.filename
+            // res.sendFile(path.join(`${__dirname}/anh/${menu.filename}`));
+            app.get(link, function (req, res) {
+                res.sendFile(__dirname + link1);
+            })
+        })
+        
+      });
+    //   res.send("thanh cong")
 })
 // app.get('/orderadmin1', (req, res) => {
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -526,21 +549,7 @@ app.post('/confirmorder',(req,res)=>{
     
     
 })
-app.post("/addimg1",(req,res)=>{
-    uploadFile(req, res, (error) => {
-        // Nếu có lỗi thì trả về lỗi cho client.
-        // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
-        if (error) {
-          return res.send(`Error when trying to upload: ${error}`);
-        }
-        console.log(req.files)
-        
-        req.files.map((menu, index) => {
-            res.sendFile(path.join(`${__dirname}/anh/${menu.filename}`));
-        })
-        
-      });
-})
+
 app.post("/deleteP",(req,res)=>{
     var body=req.body
     console.log(body)
@@ -552,7 +561,7 @@ app.post("/deleteP",(req,res)=>{
     var arr=[link1,link2,link3,link4,link5]
     arr.map((user,index)=>{
         fs.unlink(user, function (err) {
-            if (err) throw err;
+            // if (err) throw err;
             // if no error, file has been deleted successfully
             console.log('File deleted!');
         });

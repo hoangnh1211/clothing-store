@@ -9,15 +9,16 @@ class Repair extends Component{
         super(props);
         this.state = {
             data:[],
-            name:'',loading:0,class:[]
+            name:'',loading:0,class:[],class1:[]
         };
       }
       componentDidMount() {
         axios.get('/products')
         .then(res=>{
           console.log(res.data);
+          var length=res.data.length;
           this.setState({
-            data:res.data,loading:1
+            data:res.data,loading:1,class1:Array(length).fill('frame')
         });
         })
         axios.get('/search2')
@@ -28,11 +29,16 @@ class Repair extends Component{
         });
         })
     }
-    deleteP(id,link){
+    deleteP(id,link,index){
         axios.post("/deleteP",{id:id,link:link})
         .then(res=>{
             var al="xóa thành công sản phẩm Id : "+id
             // if (res.data==="thanh cong"){
+                var class1=this.state.class1;
+                class1[index]="frame wow animated fadeOut"
+                this.setState({
+                class1:class1
+                })
                 alert(al);
                 window.location.reload()
             // }
@@ -89,7 +95,7 @@ class Repair extends Component{
                                             <button><a href={`/admin/repairproduct/${menu.Link}`}  ><i className="fas fa-cog"></i></a></button>
                                         </div>
                                         <div>
-                                            <button onClick={()=>this.deleteP(menu.id,menu.Link)}><i className="fas fa-trash-alt"></i></button>
+                                            <button onClick={()=>this.deleteP(menu.id,menu.Link,index)}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                         <div>
                                             <button onClick={()=>this.active(menu.id,menu.active,index)}><i className={this.state.class[index]}></i></button>

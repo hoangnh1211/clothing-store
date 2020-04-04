@@ -45,7 +45,7 @@ class Body extends Component {
   mo=()=>{
     if (this.state.class==="col-6"){
       this.setState({
-        class:"col-6 animated bounceIn"
+        class:"col-6 animated fadeInUp"
       })
     }
   }

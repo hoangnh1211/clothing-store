@@ -60,8 +60,8 @@ class Addproduct extends Component{
                 axios.post('/addkho',{Link:Link,slS:slS,slM:slM,slL:slL})
                 .then(res=>{
                     if (res.data==="thanhcong"){
-                        alert("Add thành công");
-                        window.location.reload()   
+                        // alert("Add thành công");
+                        // window.location.reload()   
                     }
                 })
             }
@@ -72,8 +72,6 @@ class Addproduct extends Component{
             console.log(res.data);
         })
         .catch(err => console.log(err))
-    
-       
        } 
        onChange =(e)=>{
         // console.log(e.target)
