@@ -26,11 +26,11 @@ class Order_confirm extends Component{
         });
       }
       render(){
-        console.log('a')
+        // console.log('a')
         if (this.state.loading===0){
           return(
               <div className="lds">
-                  <div class="lds-hourglass"></div>
+                  <div className="lds-hourglass"></div>
               </div>
            )
       } else 

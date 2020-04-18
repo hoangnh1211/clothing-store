@@ -8,19 +8,19 @@ class Repair extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            data:[],
-            name:'',loading:0,class:[],class1:[]
+            data:[],data1:[],
+            name:'',loading:0,class:[]
         };
       }
       componentDidMount() {
         axios.get('/products')
         .then(res=>{
-          console.log(res.data);
-          var length=res.data.length;
+        //   console.log(res.data);
           this.setState({
-            data:res.data,loading:1,class1:Array(length).fill('frame')
+            data:res.data,loading:1
         });
         })
+        
         axios.get('/search2')
         .then(res=>{
         //   console.log(res.data);
@@ -29,21 +29,16 @@ class Repair extends Component{
         });
         })
     }
-    deleteP(id,link,index){
+    deleteP(id,link){
         axios.post("/deleteP",{id:id,link:link})
         .then(res=>{
             var al="xóa thành công sản phẩm Id : "+id
             // if (res.data==="thanh cong"){
-                var class1=this.state.class1;
-                class1[index]="frame wow animated fadeOut"
-                this.setState({
-                class1:class1
-                })
                 alert(al);
                 window.location.reload()
             // }
         })
-        console.log(id,link)
+        // console.log(id,link)
     }
     active(id,active,index){
         axios.post("/activeP",{id:id,active:active})
@@ -59,6 +54,7 @@ class Repair extends Component{
             }
         )
     }
+    
     Show = (menus) => {
         var result = null;
         if (menus.length > 0) {
@@ -81,12 +77,13 @@ class Repair extends Component{
                         })
                     }
                 }
+                // var name=this.props.to;
                 var anh ='http://localhost:4000/anh/' + link;
                 // var anhhover='http://localhost:4000/anh/'+menu.Link+"_3";
                 return(
-                    <div className="frame">
+                    <div className="frame" key={menu.Link}>
                         
-                            <div class="container1">
+                            <div className="container1">
                                 <img className="img1" src={anh} alt="Avatar"></img>
                                 <div className="overlay">
                                 {/* <img className="img1"alt="anh" src={anhhover}></img> */}
@@ -95,7 +92,7 @@ class Repair extends Component{
                                             <button><a href={`/admin/repairproduct/${menu.Link}`}  ><i className="fas fa-cog"></i></a></button>
                                         </div>
                                         <div>
-                                            <button onClick={()=>this.deleteP(menu.id,menu.Link,index)}><i className="fas fa-trash-alt"></i></button>
+                                            <button onClick={()=>this.deleteP(menu.id,menu.Link)}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                         <div>
                                             <button onClick={()=>this.active(menu.id,menu.active,index)}><i className={this.state.class[index]}></i></button>
@@ -129,7 +126,7 @@ class Repair extends Component{
             <div className="navright">
                 <div className="shirt">
                     {/* <pre className="color-darkgray">HOME <i class="fas fa-arrow-right color-black"></i> <b className="color-black"> Search</b>  </pre> */}
-                    <p class="size-20"><b>Tất cả sản phẩm</b></p>
+                    <p className="size-20"><b>Tất cả sản phẩm</b></p>
                     <div className="container">
                          <div className=" flex-container ">
                         

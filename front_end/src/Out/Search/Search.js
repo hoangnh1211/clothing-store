@@ -16,14 +16,14 @@ class Search extends Component{
       componentDidMount() {
         axios.get('/search1')
         .then(res=>{
-          console.log(res.data);
+        //   console.log(res.data);
           this.setState({
             data:res.data
         });
         })
         axios.get('/search2')
         .then(res=>{
-          console.log(res.data);
+        //   console.log(res.data);
           this.setState({
             name:res.data
         });
@@ -47,9 +47,9 @@ class Search extends Component{
         if (menus.length > 0) {
             result = menus.map((menu, index) =>{
                 var link=menu.Link+"_1"
-                if (index>=(currentPage-1)*this.state.newsPerPage && index <= currentPage*this.state.newsPerPage-1 && menu.active)
+                if (index>=(currentPage-1)*this.state.newsPerPage && index <= currentPage*this.state.newsPerPage-1 && menu.active===1)
                 return(
-                    <Frame match={match.match} className="flex-left" anh={link} ten={menu.Name} giamoi={menu.NewPrice} giacu={menu.Price} to={menu.Link}>  </Frame>
+                    <Frame match={match.match} key={menu.Link} className="flex-left" anh={link} ten={menu.Name} giamoi={menu.NewPrice} giacu={menu.Price} to={menu.Link}>  </Frame>
                 )
                 return null;
             })
@@ -70,11 +70,11 @@ class Search extends Component{
                 // console.log(abc1,index)
                 if (index===abc1){
                     return(
-                        <a href={a} ><li className="pagelink hvr-grow-shadow pagelink_click" onClick={this.scrollToTop}> {index}</li></a>
+                        <a href={a} key={a} ><li className="pagelink hvr-grow-shadow pagelink_click" onClick={this.scrollToTop}> {index}</li></a>
                         )
                 } else 
                 return(
-                    <a href={a} ><li className="pagelink hvr-grow-shadow" onClick={this.scrollToTop}> {index}</li></a>
+                    <a href={a} key={a}><li className="pagelink hvr-grow-shadow" onClick={this.scrollToTop}> {index}</li></a>
                     )
             })   
         }
@@ -113,8 +113,8 @@ class Search extends Component{
         })
         return(
             <div className="shirt">
-                <pre className="color-darkgray">HOME <i class="fas fa-arrow-right color-black"></i> <b className="color-black"> Search</b>  </pre>
-                <p class="size-20"><b>Kết quả tìm kiếm cho " {this.state.name} "</b></p>
+                <pre className="color-darkgray">HOME <i className="fas fa-arrow-right color-black"></i> <b className="color-black"> Search</b>  </pre>
+                <p className="size-20"><b>Kết quả tìm kiếm cho " {this.state.name} "</b></p>
                 
                 <div className="page row">
                     <span className="col-3" >Trang {this.state.currentPage} trên tổng số {this.state.pageNumbers} :</span>

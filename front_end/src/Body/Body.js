@@ -21,6 +21,7 @@ import Login from "../Login";
 import Cart from "../Out/Cart/Cart";
 import axios from "axios";
 import ShowProducts from "../Out/ShowProducts/ShowProducts";
+// import Axios from "axios";
 
 class Body extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Body extends Component {
     this.state = {
       order: [],
       name: "",
-      dem: [],
+      dem: [],data:[],datarouter:[],
       class:"col-6",
       class2:"col-6"
     };
@@ -40,12 +41,86 @@ class Body extends Component {
         order: res.data
       });
     });
+    axios.get("/datashow").then(res=>{
+      // console.log(res.data)
+      this.setState({
+        data:res.data
+      })
+      })
+    axios.get("/datarouter").then(res=>{
+      // console.log(res.data)
+      this.setState({
+        datarouter:res.data
+      })
+    })
+    // axios.get("http://forcommunity.byethost5.com/api/category").then(res=>{
+    //   console.log(res)
+    // })
   }
-
+  showallnav(data){
+    var result = null;
+    result=data.map((datas,index)=>{
+      var link="/"+datas.name
+      return(
+        <Link to={link} key={link}>
+          <div className="abcd">{datas.description}</div>
+        </Link>
+      )
+    })
+    return result
+  }
+  showRouter=(data)=>{
+    var result=null;
+    result=data.map((datas,index)=>{
+      var path="/"+datas.name
+      // console.log(datas)
+      return(
+        <Route key={path}
+            path={path}
+            exact
+            render={props => 
+              <ShowProducts {...props}   Name={datas.description} />
+            }/>
+      )
+    })
+    return result
+  }
+  shownav=(data)=>{
+    var result = null;
+    result = data.map((datas,index)=>{
+      var link="/"+datas.N;
+      var linkanh="http://localhost:4000/anh/"+datas.L;
+      // console.log(linkanh,da)
+      return(
+        <div onMouseEnter={this.mo} key={datas.D} onClick={this.scrollToTop} onMouseLeave={this.mo1} className="subnav">
+          <button  className="subnavbtn">
+            <Link to={link}><b className="size25">{datas.D}</b></Link>
+          </button>
+          <div  className=" subnav-content ">
+            <div className="row">
+              <div className={this.state.class}>
+                <div className="abc1">
+                  <b>{datas.D}</b>
+                </div>
+                {this.showallnav(datas.dc)}
+              </div>
+              <div className="col-6">
+                <img
+                  className="img" alt="anh"
+                  src={linkanh}
+                ></img>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    })
+    return result;
+  }
   mo=()=>{
     if (this.state.class==="col-6"){
       this.setState({
-        class:"col-6 animated fadeInUp"
+        class:"col-6 animated fadeIn"
       })
     }
   }
@@ -63,6 +138,7 @@ class Body extends Component {
     });
   }
   render() {
+    // console.log(this.state.data)
     return (
       <div className="body">
         <div className={this.props.class}>
@@ -71,96 +147,8 @@ class Body extends Component {
               <Link to="/" ><b className="size25"><i className="fas fa-home"></i></b></Link>
             </button>
           </div>
+          {this.shownav(this.state.data)}
           
-          <div onMouseEnter={this.mo} onClick={this.scrollToTop} onMouseLeave={this.mo1} className="subnav">
-            <button  className="subnavbtn">
-              <Link to="/shirt"><b className="size25">Áo</b></Link>
-            </button>
-            <div  className=" subnav-content ">
-              <div className="row">
-                <div className={this.state.class}>
-                  <div className="abc1">
-                    <b >Áo</b>
-                  </div>
-                  <Link to="/shirt_len">
-                    <div className="abcd">Áo len</div>
-                  </Link>
-                 
-                  <Link to="/shirt_thun">
-                    <div className="abcd">Áo thun</div>
-                  </Link>
-                  <Link to="/shirt_khoac">
-                    <div className="abcd">Áo khoác</div>
-                  </Link>
-                  <Link to="/shirt_somi">
-                    <div className="abcd">Áo sơ mi</div>
-                  </Link>
-                </div>
-                <div className="col-6">
-                  <img
-                    className="img" alt="anh"
-                    src="http://localhost:4000/anh/menu-ao-92w"
-                  ></img>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div onMouseOver={this.mo} onClick={this.scrollToTop} onMouseOut={this.mo1} className="subnav">
-            <button className="subnavbtn">
-              <Link to="/trouser"><b className="size25">Quần</b></Link>
-            </button>
-            <div className=" subnav-content ">
-              <div className="row">
-                <div className={this.state.class}>
-                  <div className="abc1">
-                    <b>Quần</b>
-                  </div>
-                  <Link to="/trouser_sooc">
-                    <div className="abcd">Quần Sooc</div>
-                  </Link>
-                  <Link to="/trouser_jean">
-                    <div className="abcd">Quần Jean</div>
-                  </Link>
-                  <Link to="/trouser_baggy">
-                    <div className="abcd">Quần Baggy</div>
-                  </Link>
-                </div>
-                <div className="col-6">
-                  <img className="img1" alt="anh" src="http://localhost:4000/92quan"></img>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div onMouseOver={this.mo} onClick={this.scrollToTop} onMouseOut={this.mo1} className="subnav">
-            <button className="subnavbtn">
-              <Link to="/vay"><b className="size25">Váy</b></Link>
-            </button>
-            <div className=" subnav-content ">
-              <div className="row">
-                <div className={this.state.class}>
-                  <div className="abc1">
-                    <b>Váy</b>
-                  </div>
-                  <Link to="/vay_yem">
-                    <div className="abcd">
-                      <pre>Yếm       </pre>
-                    </div>
-                  </Link>
-                  <Link to="/vay_jum">
-                    <div className="abcd">
-                      <pre>Jum      </pre>
-                    </div>
-                  </Link>
-                  <Link to="/vay_dam">
-                    <div className="abcd">Đầm</div>
-                  </Link>
-                </div>
-                <div className="col-6">
-                  <img className="img1" alt="anh" src="http://localhost:4000/92vay"></img>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div className="container">
         <Switch >
@@ -180,91 +168,92 @@ class Body extends Component {
             render={props => <Cart {...props} data={this.state.order} />}
           />
           {/* <Route path="/shirt" exact component={Shirt} /> */}
-          <Route
+          {/* <Route
             path="/shirt"
             exact
-            render={props => <ShowProducts {...props}  datas={['len','thun','khoac','somi']}  Name="Áo" />}
+            render={props => <ShowProducts {...props}  Name="Áo" />}
           />
           <Route
-            path="/shirt_len"
+            path="/len"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['len']}  Name="Áo Len" />
+              <ShowProducts {...props}    Name="Áo Len" />
             }
           />
           <Route
-            path="/shirt_thun"
+            path="/thun"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['thun']} Name="Áo Thun" />
+              <ShowProducts {...props}   Name="Áo Thun" />
             }
           />
           <Route
-            path="/shirt_khoac"
+            path="/khoac"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['khoac']}  Name="ÁO Khoác" />
+              <ShowProducts {...props}    Name="Áo Khoác" />
             }
           />
           <Route
-            path="/shirt_somi"
+            path="/somi"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['somi']} Name="Áo Sơ Mi" />
+              <ShowProducts {...props}  Name="Áo Sơ Mi" />
             }
           />
           <Route
             path="/trouser"
             exact
-            render={props => <ShowProducts {...props}   datas={['sooc','jean','baggy']} Name="Quần" />}
+            render={props => <ShowProducts {...props}    Name="Quần" />}
           />
           <Route
-            path="/trouser_sooc"
+            path="/sooc"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['sooc']} Name="Quần Sooc" />
+              <ShowProducts {...props}  Name="Quần Sooc" />
             }
           />
           <Route
-            path="/trouser_jean"
+            path="/jean"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['jean']} Name="Quần Jean" />
+              <ShowProducts {...props}   Name="Quần Jean" />
             }
           />
           <Route
-            path="/trouser_baggy"
+            path="/baggy"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['baggy']} Name="Quần Baggy" />
+              <ShowProducts {...props}   Name="Quần Baggy" />
             }
           />
           <Route
             path="/vay"
             exact
-            render={props => <ShowProducts {...props}  datas={['dam','jum','yem']}  Name="Váy" />}
+            render={props => <ShowProducts {...props}  Name="Váy" />}
           />
           <Route
-            path="/vay_dam"
+            path="/dam"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['dam']} Name="Váy Đầm" />
+              <ShowProducts {...props}  Name="Váy Đầm" />
             }
           />
           <Route
-            path="/Vay_jum"
+            path="/jum"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['jum']} Name="Váy Jumsuit" />
+              <ShowProducts {...props}   Name="Váy Jumsuit" />
             }
           />
           <Route
-            path="/vay_yem"
+            path="/yem"
             exact
             render={props => 
-              <ShowProducts {...props}  datas={['yem']} Name="Váy Yếm" />
+              <ShowProducts {...props}  Name="Váy Yếm" />
             }
-          />
+          /> */}
+          {this.showRouter(this.state.datarouter)}
           <Route path="/shirt/aaa" component={Products} />
           <Route path="/product/:name" component={Products} />
           <Route path="/trouser/:name" component={Products} />

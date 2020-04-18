@@ -59,7 +59,7 @@ class Main extends Component{
       behavior: "smooth"
     });
   }
-  componentWillUpdate() {
+  componentDidUpdate() {
     const node = this.node;
     if (this.state.height!==node.scrollHeight){
       this.setState({

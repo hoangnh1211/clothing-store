@@ -1,7 +1,7 @@
 
 import React,{Component} from 'react';
 import './Admin.css'
-// import axios from "axios"
+import axios from "axios"
 // import axios, { post } from 'axios';
 import {
     BrowserRouter as Router,
@@ -13,8 +13,26 @@ import Repair from './RepairProduct/Repair';
 import Repairproduct from './RepairProduct/RepairProduct';
 import Orders from './Order/Order';
 import Order_confirm from './Order_confirm/Order_confirm';
+import {Redirect} from 'react-router-dom'
 class Admin extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            name:""
+        };
+      }
+    componentDidMount(){
+        axios.get("/testadmin").then(res=>{
+            console.log(res.data)
+            this.setState({
+                name:res.data
+            })
+        })
+    }
     render(){
+        if (this.state.name === 'chua dang nhap') {
+            return <Redirect to="/"/>
+          }
       return(
         <Router>
             <div className="headeradmin">
@@ -31,7 +49,13 @@ class Admin extends Component{
                         <li><i className="fas fa-plus"></i>Thêm sản phẩm</li>
                     </ul>
                 </div>
-                <Route path='/admin' exact component={HomeAdmin}></Route>
+                {/* <Route path='/admin' exact component={HomeAdmin}></Route> */}
+                <Route
+                    path='/admin'
+                    exact
+                    render={props => 
+                    <HomeAdmin {...props}   Name={this.state.name} />
+                    }/>
                 <Route path='/admin/addproduct' exact component={Addproduct}></Route>
                 <Route path='/admin/repairproduct' exact component={Repair}></Route>
                 <Route path='/admin/order' exact component={Orders}></Route>

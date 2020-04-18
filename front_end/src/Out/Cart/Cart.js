@@ -254,7 +254,7 @@ class Cart extends Component{
     } else{
         return(
             <div className="lds">
-                    <div class="lds-hourglass"></div>
+                    <div className="lds-hourglass"></div>
                 </div>
         )
     }

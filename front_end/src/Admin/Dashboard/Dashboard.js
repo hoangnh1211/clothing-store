@@ -11,6 +11,7 @@ class HomeAdmin extends Component{
     super(props); 
     // var today=new Date();
     this.state = {
+        a:0,
       d:1,
       chartOptions:{
         
@@ -123,10 +124,22 @@ class HomeAdmin extends Component{
     
     console.log(this.state.dem)
    }
+   logout=()=>{
+    axios.get('/logoutadmin').then(res=>console.log(res))
+    .catch(err=>console.log(err))
+    window.location.reload()
+   }
     render(){
         return(
         <div className="navright">
-            <h1 >Admin</h1>
+            <div className="row">
+                <div className="col">
+                    <h1 >Admin : {this.props.Name}</h1>
+                </div>
+                <div className="col">
+                    <button onClick={this.logout}>Đăng Xuất</button>
+                </div>
+            </div>
             {/* <Linecharts data={this.state.series}></Linecharts> */}
             <HighchartsReact
                 highcharts={Highcharts}  

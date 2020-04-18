@@ -48,30 +48,82 @@ app.get('/shirt/abcabc', function (req, res, next) {
     //  var sql1 = "insert into khachhang values ("+"'"+body.name+"'"+","+"'"+body.username+"'"+","+"'"+body.password+"'"+ ");" +"create table "+body.username+" (id int, ten varchar(50));";
     //  sequelize.query(sql1);
 });
-app.get('/data', function (req, res) {
-    sql.connect(config, function (err) {
-        if (err) console.log(err);
-        var request = new sql.Request();
-        request.query('select * from Khachhang ', function (err, recordset) {
-            sql.close();
-            res.json(recordset.recordsets[0]);
-            console.log(res.json(recordset.recordsets[0]))
-        });
-    });
-});
-
+app.post("/idcate",(req,res)=>{
+    var body=req.body;
+    // console.log(body)
+    sequelize.query("select idcategory from detailedcategory where id="+body.id,{type: sequelize.QueryTypes.SELECT})
+    .then(data=>{
+        res.send(data)
+    })
+})
+app.get("/datarouter",(req,res)=>{
+    // console.log("da")
+    sequelize.query("select category.name,category.description from category union all select detailedcategory.name,detailedcategory.description from detailedcategory",{type: sequelize.QueryTypes.SELECT})
+    .then(data=>{
+        res.send(data)
+        // console.log(data)
+    })
+})
+app.get("/datashow",(req,res)=>{
+    sequelize.query("select * from category",{type: sequelize.QueryTypes.SELECT})
+    .then(data =>{
+        var datas=[]
+        var length=data.length;
+        // res.send(data)
+        var d=0;
+        data.map((data1,index)=>{
+            sequelize.query("select name,description,id from detailedcategory where idcategory="+data1.id,{type: sequelize.QueryTypes.SELECT})
+            .then(data2=>{
+                var abc={N:data1.name,D:data1.description,id:data1.id,L:data1.linkanh,dc:data2}
+                // console.log(abc)
+                d=d+1
+                datas[index]=abc;
+                // res.send(datas)
+                // console.log(length,index,d)
+                if (d===length){
+                // console.log(length,index)
+                    res.send(datas)
+                }
+            })
+        })
+    })
+})
+app.post("/data",(req,res)=>{
+    var body=req.body
+    console.log(body)
+    sequelize.query("select * from category ",{ type: sequelize.QueryTypes.SELECT})
+    .then(id =>{
+        // console.log(id[0].id)
+        const userabc= id.find(user => user.name == body.name);
+        // console.log(userabc)
+        if (userabc===undefined) {
+            sequelize.query("select id from detailedcategory where name='"+body.name+"'",{ type: sequelize.QueryTypes.SELECT})
+            .then(id=>{
+                // console.log(id)
+                res.send(id)
+            })
+        } else{
+            sequelize.query("select id from detailedcategory where idcategory="+userabc.id,{ type: sequelize.QueryTypes.SELECT})
+            .then(id=>{
+                // console.log(id)
+                res.send(id)
+            })
+        }
+    })
+})
 
 app.post('/datageneral', function (req, res) {
     var body=req.body.name
+    // console.log(body)
     var order
     if (req.body.order!==undefined) order=req.body.order
     console.log(req.body)
     var sql="select * from products where (";
     for (var i=0;i<body.length;i++){
         if (i!==(body.length-1)){
-            sql=sql+"Link like '"+body[i]+"%' or "
+            sql=sql+"iddetailedcategory="+body[i].id+" or "
         } else {
-            sql=sql+"Link like '"+body[i]+"%') "
+            sql=sql+"iddetailedcategory="+body[i].id+") "
             sql=sql+order
             // console.log(order)
         }
@@ -85,7 +137,7 @@ app.post('/datageneral', function (req, res) {
 });
 
 app.get('/products', function (req, res) {
-    sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id ;", { type: sequelize.QueryTypes.SELECT})
+    sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.iddetailedcategory,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id ;", { type: sequelize.QueryTypes.SELECT})
     .then(users => {
     // console.log(users)
     res.send(users)
@@ -93,7 +145,7 @@ app.get('/products', function (req, res) {
 });
 app.post("/getproduct",function(req,res){
     var link=req.body.link;
-    sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id where Link='"+link+"'", { type: sequelize.QueryTypes.SELECT})
+    sequelize.query("select Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id where Link='"+link+"'", { type: sequelize.QueryTypes.SELECT})
     .then(user=>{
         res.send(user)
     })
@@ -137,10 +189,10 @@ sequelize.query("select Link from products;", { type: sequelize.QueryTypes.SELEC
 app.get('/anh/banner3', function (req, res) {
     res.sendFile(__dirname + "/anh/banner.jpg");
 });
-app.get('/92vay', function (req, res) {
+app.get('/anh/92vay', function (req, res) {
     res.sendFile(__dirname + "/anh/92vay.jpg");
 });
-app.get('/92quan', function (req, res) {
+app.get('/anh/92quan', function (req, res) {
     res.sendFile(__dirname + "/anh/92quan.jpg");
 });
 app.get('/anh', function (req, res) {
@@ -150,8 +202,8 @@ app.use(express.static('anh'));
 app.get('/logo', function (req, res) {
     res.sendFile(__dirname + "/anh/logo.png");
 });
-app.get('/anh/menu-ao-92w', function (req, res) {
-    res.sendFile(__dirname + "/anh/menu-ao-92w.jpg");
+app.get('/anh/92ao', function (req, res) {
+    res.sendFile(__dirname + "/anh/92ao.jpg");
 });
 app.get('/anh/banner2', function (req, res) {
     res.sendFile(__dirname + "/anh/banner2.jpg");
@@ -329,6 +381,11 @@ app.get('/logout',(req,res)=>{
     req.session.name=undefined;
     res.send("dang xuat")
 })
+app.get('/logoutadmin',(req,res)=>{
+    req.session.usernameadmin=undefined;
+    // req.session.name=undefined;
+    res.send("dang xuat")
+})
 sequelize.authenticate()
     .then(function () {
         console.log('adad')
@@ -372,8 +429,8 @@ let diskStorage = multer.diskStorage({
 
 app.post('/addproduct',(req,res)=>{
     var body=req.body;
-    console.log(body)
-    sequelize.query("insert into Products values (N'"+body.Name+"',"+body.Price+","+body.NewPrice+",'"+body.Link+"',N'"+body.Description+"','"+body.name_kodau+"',1)")
+    // console.log(body)
+    sequelize.query("insert into Products values (N'"+body.Name+"',"+body.Price+","+body.NewPrice+",'"+body.Link+"',N'"+body.Description+"','"+body.name_kodau+"',1,"+body.id+")")
     res.send("thanhcong")
 })
 app.post('/addkho',(req,res)=>{
@@ -384,29 +441,6 @@ app.post('/addkho',(req,res)=>{
         sequelize.query("insert into kho values ("+users[0].id+","+body.slS+","+body.slM+","+body.slL+")")
     })
     res.send("thanhcong")
-})
-app.post("/addimg1",(req,res)=>{
-    // console.log(req)
-    uploadFile(req, res, (error) => {
-        // Nếu có lỗi thì trả về lỗi cho client.
-        // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
-        // if (error) {
-        //   return res.send(`Error when trying to upload: ${error}`);
-        // }
-        console.log(req.files)
-        
-        req.files.map((menu, index) => {
-            var length=menu.filename.length;
-            var link="/anh/"+menu.filename.slice(0,length-3)
-            var link1="/anh/"+menu.filename
-            // res.sendFile(path.join(`${__dirname}/anh/${menu.filename}`));
-            app.get(link, function (req, res) {
-                res.sendFile(__dirname + link1);
-            })
-        })
-        
-      });
-    //   res.send("thanh cong")
 })
 // app.get('/orderadmin1', (req, res) => {
 //     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -517,7 +551,7 @@ app.post('/orderadmin',(req,res)=>{
                 sequelize.query("select DISTINCT time,timenhan,username from history where timenhan>='"+date+"' and timenhan<'"+tomorow+"' order by time ", { type: sequelize.QueryTypes.SELECT})
                 .then(users => {
                 data.time=users;
-            res.send(data);
+                res.send(data);
 
                 })    
             })
@@ -526,7 +560,7 @@ app.post('/repairproduct',(req,res)=>{
     var body=req.body;
     // console.log(body)
     // sequelize.query("insert into Products values (N'"+body.Name+"',"+body.Price+","+body.NewPrice+",'"+body.Link+"',N'"+body.Description+"','"+body.name_kodau+"')")
-    var n="update Products set Name=N'"+body.Name+"',Price="+body.Price+",NewPrice="+body.NewPrice+",Link='"+body.Link+"',Description=N'"+body.Description+"',name_kodau='"+body.name_kodau+"' where id="+body.id +";";
+    var n="update Products set Name=N'"+body.Name+"',Price="+body.Price+",NewPrice="+body.NewPrice+",Link='"+body.Link+"',Description=N'"+body.Description+"',name_kodau='"+body.name_kodau+"',iddetailedcategory="+body.idcate+" where id="+body.id +";";
     n=n+" update kho  set sizeS="+body.slS+",sizeM="+body.slM+",sizeL="+body.slL+" where id="+body.id+";"
     sequelize.query(n);
     res.send("thanh cong")
@@ -549,7 +583,29 @@ app.post('/confirmorder',(req,res)=>{
     
     
 })
-
+app.post("/addimg1",(req,res)=>{
+    uploadFile(req, res, (error) => {
+        // Nếu có lỗi thì trả về lỗi cho client.
+        // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
+        if (error) {
+          return res.send(`Error when trying to upload: ${error}`);
+        }
+        console.log(req.files)
+        
+        req.files.map((menu, index) => {
+            // res.sendFile(path.join(`${__dirname}/anh/${menu.filename}`));
+            var length=menu.filename.length;
+            var abc=menu.filename.slice(0,length-3);
+            var path = '/anh/';
+            var    path1 = path + abc;
+            var link1 = '/anh/' + menu.filename;
+            app.get(path1, function (req, res) {
+                res.sendFile(__dirname + link1);
+            })
+        })
+        
+      });
+})
 app.post("/deleteP",(req,res)=>{
     var body=req.body
     console.log(body)
@@ -561,7 +617,7 @@ app.post("/deleteP",(req,res)=>{
     var arr=[link1,link2,link3,link4,link5]
     arr.map((user,index)=>{
         fs.unlink(user, function (err) {
-            // if (err) throw err;
+            if (err) throw err;
             // if no error, file has been deleted successfully
             console.log('File deleted!');
         });

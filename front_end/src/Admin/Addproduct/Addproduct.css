@@ -7,13 +7,16 @@
     padding-left: 10%;
     padding-right: 10%;
 }
-
+.formadd .container{
+    max-width: 700px;
+}
 .navright{
     margin-left: 256px;
 }
 
 .formadd div div{
-    width: 50%;
+    /* width: 50%; */
+    /* max-width: 700px; */
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
@@ -23,6 +26,9 @@
 }
 .formadd div div input{
     width: 100%;
+}
+.formadd div .row select{
+    width: 180px;
 }
 .formadd .col{
     padding: 0px;

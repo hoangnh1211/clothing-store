@@ -83,7 +83,7 @@ class Login extends Component {
     }
   return (
     <div className="login1">
-      <div class="page-title">
+      <div className="page-title">
         <h1 className="size32">{this.props.data}</h1>
         {/* <div class="field note">If you have an account, sign in with your email address.</div> */}
       </div>

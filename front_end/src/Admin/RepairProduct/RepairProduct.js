@@ -9,6 +9,7 @@ class Repairproduct extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            data1:[],tech:0,tech1:0,
             id:0,
             Name:"",
             Price:0,
@@ -27,6 +28,7 @@ class Repairproduct extends Component{
             data:{},loading:0
         };
       }
+
       componentDidMount() {
         axios.get('/products')
         .then(res=>{
@@ -49,17 +51,70 @@ class Repairproduct extends Component{
                     slS:menu.sizeS,
                     slM:menu.sizeM,
                     slL:menu.sizeL,
-                    loading:1
+                    loading:1,
+                    tech1:menu.iddetailedcategory
                     // file1:"dam1_to1.jpg"    
                 });
+                console.log(menu.iddetailedcategory)
+                axios.post("/idcate",{id:menu.iddetailedcategory})
+                .then(res=>{
+                    console.log(res.data[0].idcategory)
+                    this.setState({
+                        tech:res.data[0].idcategory
+                    })
+                })
                 return null;
             } else return null;
         })
         })
+        axios.get("/datashow").then(res=>{
+            // console.log(res.data)
+            this.setState({
+              data1:res.data
+            })
+            })
       }
       onChange1=(e)=> {
         var name=e.target.name;
         this.setState({[name]:e.target.files[0]})
+      }
+      handleChange(e){
+        this.setState({
+          tech: e.target.value
+        })
+      }
+      handleChange1(e){
+        this.setState({
+          tech1: e.target.value
+        })
+      }
+      showcate=(data)=>{
+        var result=null
+        result=data.map((data,index)=>{
+            return(
+                <option key={data.id} value={data.id}>{data.D}</option>
+            )
+        })
+        return result
+      }
+      showcate1=(data,name)=>{
+        var result=null
+        var result1=null
+         result1=data.map((data,index)=>{
+            var id=parseInt(name)
+            if (data.id===id){
+                result=data.dc.map((data,index)=>{
+                    return(
+                        <option key={data.id} value={data.id}>{data.description}</option>
+                    )
+                })   
+                return result              
+            } else {
+                return null
+            }
+            
+        }) 
+        return result1
       }
       add=(e)=>{
         e.preventDefault();
@@ -73,6 +128,7 @@ class Repairproduct extends Component{
         var slS=this.state.slS;
         var slM=this.state.slM;
         var slL=this.state.slL;
+        var idcate=this.state.tech1;
         const formData = new FormData();
         // console.log(slL,slM,slS)
         // console.log(this.state.file)
@@ -94,7 +150,7 @@ class Repairproduct extends Component{
             console.log(res.data);
         })
         .catch(err => console.log(err))
-        axios.post('/repairproduct',{id:id,Name:Name,Price:Price,NewPrice:NewPrice,Link:Link,Description:Description,name_kodau:name_kodau,slS:slS,slM:slM,slL:slL})
+        axios.post('/repairproduct',{id:id,Name:Name,Price:Price,NewPrice:NewPrice,Link:Link,Description:Description,name_kodau:name_kodau,slS:slS,slM:slM,slL:slL,idcate:idcate})
         .then(res=>{
             // console.log(res.data);
             if (res.data==="thanh cong"){
@@ -124,7 +180,7 @@ class Repairproduct extends Component{
         } else 
       return(
             <div className="navright">
-                <form onSubmit={this.add} className="formadd " autocomplete="off">
+                <form onSubmit={this.add} className="formadd " >
                     <div className="container">
                             <div> 
                                 <p> tên sản phẩm</p>
@@ -151,6 +207,20 @@ class Repairproduct extends Component{
                             <div>
                                 <p> link </p>
                                 <input value={this.state.Link} name="Link" onChange={this.onChange}></input>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <p> Thể loại </p>
+                                    <select id="lang" className="" onChange={this.handleChange.bind(this)} value={this.state.tech}>
+                                        {this.showcate(this.state.data1)}
+                                    </select>
+                                </div>
+                                <div className="col">
+                                    <p> Thể loại chi tiết</p>
+                                    <select id="lang" className="" onChange={this.handleChange1.bind(this)} value={this.state.tech1}>
+                                        {this.showcate1(this.state.data1,this.state.tech)}
+                                    </select>
+                                </div>
                             </div>
                             <div>
                                 <p> mô tả sản phẩm </p>

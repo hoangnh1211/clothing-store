@@ -44,6 +44,7 @@ class Orders extends Component{
         // var value2=tomorow[0]+'-'+(tomorow[1]+1)+'-'+tomorow[2]
         axios.post('/orderadmin',{date:e.target.value,tomorow:tomorow})
         .then(res=>{
+          // console.log("a",res.data.data)
           this.setState({
             data: res.data.data,
             date1:res.data.time

@@ -14,33 +14,58 @@ class ShowProducts extends Component{
             newsPerPage:9,
             pageNumbers:1,
             tech: 'ten-az',
-            data:{},datas:[],
+            data:{},datas:'',data1:[],
             loading:0
         };
       }
     changedata(){
-        console.log()
-        Axios.post("/datageneral",{name:this.props.datas,order:"order by Name"}).then(res => {
-            // console.log(this.props.datas,res.data);
-            this.setState({
-              data:res.data,loading:1
+        var {match}=this.props;
+        var length=match.path.length
+        var name=match.path.slice(1,length)
+        // console.log(name)   
+        Axios.post("/data",{name:name}).then(res=>{
+            Axios.post("/datageneral",{name:res.data,order:"order by Name"}).then(res => {
+                // console.log(this.props.datas,res.data);
+                this.setState({
+                  data:res.data,loading:1
+                });
             });
-        });
+        })
         
     }
+    // componentDidMount(){
+    //     var {match}=this.props;
+    //     var length=match.path.length
+    //     var name=match.path.slice(1,length)
+    //     // console.log(name)   
+    //     Axios.post("/data1",{name:name}).then(res=>{
+    //         Axios.post("/datageneral1",{name:res.data,order:"order by Name"}).then(res => {
+    //             // console.log(this.props.datas,res.data);
+    //             this.setState({
+    //               data:res.data,loading:1
+    //             });
+    //         });
+    //     })
+    // }
       handleChange(e){
         var abc=""
         if (e.target.value==="ten-az") abc="order by Name"
         if (e.target.value==="ten-za") abc="order by Name desc"
         if (e.target.value==="giathap") abc="order by NewPrice"
         if (e.target.value==="giacao") abc="order by NewPrice desc"
-        console.log(abc)
-        Axios.post("/datageneral",{name:this.props.datas,order:abc}).then(res => {
-            console.log(res.data);
-            this.setState({
-              data:res.data,loading:1
+        // console.log(abc)
+        var {match}=this.props;
+        var length=match.path.length
+        var name=match.path.slice(1,length)
+        // console.log(name)   
+        Axios.post("/data",{name:name}).then(res=>{
+            Axios.post("/datageneral",{name:res.data,order:abc}).then(res => {
+                // console.log(this.props.datas,res.data);
+                this.setState({
+                  data:res.data,loading:1
+                });
             });
-        });
+        })
         this.setState({
           tech: e.target.value
         })
@@ -63,7 +88,7 @@ class ShowProducts extends Component{
                 var link=menu.Link+"_1"
                 if (index>=(currentPage-1)*this.state.newsPerPage && index <= currentPage*this.state.newsPerPage-1 && menu.active===1)
                 return(
-                    <Frame match={match.match} className="flex-left" anh={link} ten={menu.Name} giamoi={menu.NewPrice} giacu={menu.NewPrice*1.5} to={menu.Link}>  </Frame>
+                    <Frame key={menu.Link} match={match.match} className="flex-left" anh={link} ten={menu.Name} giamoi={menu.NewPrice} giacu={menu.NewPrice*1.5} to={menu.Link}>  </Frame>
                 )
                 return null;
             })
@@ -84,11 +109,11 @@ class ShowProducts extends Component{
                 // console.log(abc1,index)
                 if (index===abc1){
                     return(
-                        <a href={a} ><li className="pagelink hvr-grow-shadow pagelink_click" onClick={this.scrollToTop}> {index}</li></a>
+                        <a href={a} key={a} ><li className="pagelink hvr-grow-shadow pagelink_click" onClick={this.scrollToTop}> {index}</li></a>
                         )
                 } else 
                 return(
-                    <a href={a} ><li className="pagelink hvr-grow-shadow" onClick={this.scrollToTop}> {index}</li></a>
+                    <a href={a} key={a}><li className="pagelink hvr-grow-shadow" onClick={this.scrollToTop}> {index}</li></a>
                     )
             })   
         }
@@ -102,30 +127,31 @@ class ShowProducts extends Component{
       }
     render(){
         var match=this.props;
+        // console.log("a")
         var abc=match.location.hash;
         var abc1,length;
-        var aProps = Object.getOwnPropertyNames(this.state.datas);
-        var bProps = Object.getOwnPropertyNames(match.datas);
+        // var aProps = Object.getOwnPropertyNames(this.state.datas);
+        // var bProps = Object.getOwnPropertyNames(match.datas);
         // Nếu độ dài của mảng không bằng nhau,
         // thì 2 objects đó không bằnh nhau.
-        if (aProps.length !== bProps.length) {
-            this.setState({
-                datas:match.datas,tech:"ten-az"
-            })
-            var a="order by Name"
-            this.changedata(a)
+        if (this.state.datas !== match.match.path) { 
+            this.setState({ 
+                datas:match.match.path,tech:"ten-az" 
+            }) 
+            var a="order by Name" 
+            this.changedata(a) 
         }
 
-        for (var i = 0; i < aProps.length; i++) {
-            var propName = aProps[i];          
-            if (this.state.datas[propName] !== match.datas[propName]) {             
-                this.setState({
-                    datas:match.datas,tech:"ten-az"
-                })
-                // var a="order by Name"
-                this.changedata()    
-            }     
-        }
+        // for (var i = 0; i < aProps.length; i++) {
+        //     var propName = aProps[i];          
+        //     if (this.state.datas[propName] !== match.datas[propName]) {             
+        //         this.setState({
+        //             datas:match.datas,tech:"ten-az"
+        //         })
+        //         // var a="order by Name"
+        //         this.changedata()    
+        //     }     
+        // }
          
         
         var d=this.state.newsPerPage;

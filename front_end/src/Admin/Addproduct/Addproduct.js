@@ -9,6 +9,9 @@ class Addproduct extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            data:[],
+            tech: 1,
+            tech1:0,
             Name:"",
             Price:0,
             NewPrice:0,
@@ -29,6 +32,57 @@ class Addproduct extends Component{
         var name=e.target.name;
         this.setState({[name]:e.target.files[0]})
       }
+      handleChange(e){
+        this.setState({
+          tech: e.target.value
+        })
+      }
+      handleChange1(e){
+        this.setState({
+          tech1: e.target.value
+        })
+      }
+      componentDidMount(){
+        axios.get("/datashow").then(res=>{
+            // console.log(res.data)
+            this.setState({
+              data:res.data
+            })
+            })
+      }
+      showcate=(data)=>{
+        var result=null
+        
+        result=data.map((data,index)=>{
+            return(
+                <option key={data.id} value={data.id}>{data.D}</option>
+            )
+        })
+        return result
+      }
+      showcate1=(data,name)=>{
+        var result=null
+        var result1=null
+        console.log(data,name)
+         result1=data.map((data,index)=>{
+            
+            var id=parseInt(name)
+            console.log(id,data.id)
+            if (data.id===id){
+                console.log(data,name)
+                result=data.dc.map((data,index)=>{
+                    return(
+                        <option key={data.id} value={data.id}>{data.description}</option>
+                    )
+                })   
+                return result              
+            } else {
+                return null
+            }
+            
+        }) 
+        return result1
+      }
       add=(e)=>{
         e.preventDefault();
         var Name=this.state.Name;
@@ -40,6 +94,7 @@ class Addproduct extends Component{
         var slS=this.state.slS;
         var slM=this.state.slM;
         var slL=this.state.slL;
+        var id=this.state.tech1;
         const formData = new FormData();
         // console.log(this.state.file)
         formData.append('file',this.state.file1)
@@ -53,15 +108,15 @@ class Addproduct extends Component{
             }
         }
         
-        axios.post('/addproduct',{Name:Name,Price:Price,NewPrice:NewPrice,Link:Link,Description:Description,name_kodau:name_kodau})
+        axios.post('/addproduct',{Name:Name,Price:Price,NewPrice:NewPrice,Link:Link,Description:Description,name_kodau:name_kodau,id:id})
         .then(res=>{
             console.log(res.data);
             if (res.data==="thanhcong"){
                 axios.post('/addkho',{Link:Link,slS:slS,slM:slM,slL:slL})
                 .then(res=>{
                     if (res.data==="thanhcong"){
-                        // alert("Add thành công");
-                        // window.location.reload()   
+                        alert("Add thành công");
+                        window.location.reload()   
                     }
                 })
             }
@@ -71,7 +126,7 @@ class Addproduct extends Component{
         .then(res=>{
             console.log(res.data);
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err))       
        } 
        onChange =(e)=>{
         // console.log(e.target)
@@ -84,7 +139,7 @@ class Addproduct extends Component{
     render(){
       return(
             <div className="navright">
-                <form onSubmit={this.add}  className="formadd " autocomplete="off">
+                <form onSubmit={this.add}  className="formadd " >
                     <div className="container">
                         <div> 
                             <p> tên sản phẩm</p>
@@ -111,6 +166,20 @@ class Addproduct extends Component{
                         <div>
                             <p> link </p>
                             <input value={this.state.Link} name="Link" onChange={this.onChange}></input>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <p> Thể loại </p>
+                                <select id="lang" className="" onChange={this.handleChange.bind(this)} value={this.state.tech}>
+                                    {this.showcate(this.state.data)}
+                                </select>
+                            </div>
+                            <div className="col">
+                                <p> Thể loại chi tiết</p>
+                                <select id="lang" className="" onChange={this.handleChange1.bind(this)} value={this.state.tech1}>
+                                    {this.showcate1(this.state.data,this.state.tech)}
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <p> mô tả sản phẩm </p>

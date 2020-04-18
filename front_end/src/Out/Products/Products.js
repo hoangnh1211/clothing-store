@@ -33,8 +33,8 @@ class Products extends Component{
         var {match}=this.props;
         axios.post("/getproduct",{link:match.params.name}).then(
             res=>{
-                console.log(res.data[0])
-                if (res.data[0]!==undefined && res.data[0].active===1){
+                // console.log(res.data[0])
+                if (res.data[0]!==undefined){
                     this.setState({
                         data:res.data[0],sl:res.data[0].sizeS  ,loading:1  
                     });
@@ -139,7 +139,7 @@ class Products extends Component{
         // var styleimg = {width:362,zoomWidth:362,zoomPosition:'original',img: 'http://localhost:4000/anh/thun1_1'};
         var {match}=this.props;
         // console.log(match.params.name);
-        console.log(this.state.data);
+        // console.log(this.state.data);
         var data=this.state.data;
         // var link1="http://localhost:3000/product/"+match.params.name;
         var link='http://localhost:4000/anh/'+match.params.name;
@@ -149,7 +149,7 @@ class Products extends Component{
         if (this.state.loading===0){
             return(
                 <div className="lds">
-                    <div class="lds-hourglass"></div>
+                    <div className="lds-hourglass"></div>
                 </div>
              )
         } else{
@@ -238,7 +238,7 @@ class Products extends Component{
                         </div>
                     </div>
                     <div className="user">
-                    <i class="far fa-user"></i>
+                    <i className="far fa-user"></i>
                     </div>
                 </div>
             </div>
