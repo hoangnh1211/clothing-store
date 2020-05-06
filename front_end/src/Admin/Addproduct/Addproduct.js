@@ -63,19 +63,19 @@ class Addproduct extends Component{
       showcate1=(data,name)=>{
         var result=null
         var result1=null
-        console.log(data,name)
+        // console.log(data,name)
          result1=data.map((data,index)=>{
             
             var id=parseInt(name)
-            console.log(id,data.id)
+            // console.log(id,data.id)
             if (data.id===id){
-                console.log(data,name)
+                // console.log(data,name)
                 result=data.dc.map((data,index)=>{
                     return(
                         <option key={data.id} value={data.id}>{data.description}</option>
                     )
                 })   
-                return result              
+                return result
             } else {
                 return null
             }

@@ -7,12 +7,23 @@
     color: rgba(255,255,255,.8);
 }
 .cac{
-    
+
     padding-top:80px;
 }
 .headeradmin{
     position: fixed;
-    width: 80px;
+    height: 80px;
+    z-index: 10;
+    background-color: white;
+    width: 100%;
+    border-bottom: 1px solid gray;
+}
+.headeradmin .col{
+    margin: auto;
+}
+.headeradmin .col:nth-child(3){
+    text-align: right;
+    margin-right: 300px;
 }
 .nav1 ul{
 padding: 0px;

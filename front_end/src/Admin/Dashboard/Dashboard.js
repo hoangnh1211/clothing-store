@@ -132,14 +132,7 @@ class HomeAdmin extends Component{
     render(){
         return(
         <div className="navright">
-            <div className="row">
-                <div className="col">
-                    <h1 >Admin : {this.props.Name}</h1>
-                </div>
-                <div className="col">
-                    <button onClick={this.logout}>Đăng Xuất</button>
-                </div>
-            </div>
+            
             {/* <Linecharts data={this.state.series}></Linecharts> */}
             <HighchartsReact
                 highcharts={Highcharts}  

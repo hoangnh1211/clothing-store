@@ -36,17 +36,25 @@ class Admin extends Component{
       return(
         <Router>
             <div className="headeradmin">
-                <img src="http://localhost:4000/logo"  className="logo" alt="a"></img>
+                
+                <div className="row">
+                <div className="col"><img src="http://localhost:4000/logo"  className="logo" alt="a"></img></div>
+                <div className="col">
+                    <h1 >Admin : {this.state.name}</h1>
+                </div>
+                <div className="col">
+                    <button onClick={this.logout}>Đăng Xuất</button>
+                </div>
+            </div>
             </div>
             <div className="cac">
                 <div className="nav1">
                     <ul>
-                        <Link to='/admin'><li><i className="fas fa-plus"></i>Dashboard</li></Link>
+                        <Link to='/admin'><li><i className="fas fa-chart-bar"></i>Dashboard</li></Link>
                         <Link to='/admin/addproduct'><li><i className="fas fa-plus"></i>Thêm sản phẩm</li></Link>
-                        <Link to='/admin/repairproduct'><li><i className="fas fa-plus"></i>Sửa sản phẩm</li></Link>
-                        <Link to='/admin/order'><li><i className="fas fa-plus"></i>Đơn hàng</li></Link>
-                        <Link to='/admin/order_confirm'><li><i className="fas fa-plus"></i>Đơn hàng Xử Lý</li></Link>
-                        <li><i className="fas fa-plus"></i>Thêm sản phẩm</li>
+                        <Link to='/admin/repairproduct'><li><i className="fas fa-cog"></i>Sửa sản phẩm</li></Link>
+                        <Link to='/admin/order'><li><i className="fas fa-history"></i>Đơn hàng</li></Link>
+                        <Link to='/admin/order_confirm'><li><i className="fas fa-shopping-cart"></i>Đơn hàng Xử Lý</li></Link>
                     </ul>
                 </div>
                 {/* <Route path='/admin' exact component={HomeAdmin}></Route> */}

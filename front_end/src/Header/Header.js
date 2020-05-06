@@ -122,8 +122,11 @@ Show = (menus,name) => {
   render(){
   return (
     <div className="header">
+      
+      
       {this.Show(this.state.order,this.state.name)}
       <div className=" header-top " >
+      <div className="container">
         <div className={this.state.chua}>
           <span className="aa">
               <i className="fas fa-sign-in-alt space-right dropdown-toggle aa grey" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Đăng Ký </i>
@@ -140,8 +143,8 @@ Show = (menus,name) => {
               <div className="dropdown-menu login"><form  action="/"> 
                 <div ><input placeholder="Username"  type="text" id="username" ref="username" className="borderinput" ></input></div>
                 <div><input placeholder="Password"  type="password" id="password" ref="password" className="borderinput"></input></div>
-                <button type="submit" className="hvr-sweep-to-left1" onClick={this.handleRequert.bind(this) } ><b>ĐĂNG NHẬP</b></button></form>
                 <a href="/loginadmin"><pre className='p'> ĐĂNG NHẬP VỚI TƯ CÁCH ADMIN</pre></a>
+                <button type="submit" className="hvr-sweep-to-left1" onClick={this.handleRequert.bind(this) } ><b>ĐĂNG NHẬP</b></button></form>
               </div>
           </span>
           
@@ -152,45 +155,48 @@ Show = (menus,name) => {
             <a href="/"><i className="fas fa-sign-in-alt space-right  " onClick={this.logout} > ĐĂNG XUẤT</i></a>
           </span>
         </div>
+        </div>
       </div>
       <div className="header-bottom">
-        <div className="row ">
-          <div className="col-6">
-            <a href="/"><img src="http://localhost:4000/logo"  className="logo" alt="a"></img></a>
-          </div>
-          <div className="col-3 center formsearch border-bottom1">
-            <div className="row" >
-              <div className="col-3 cu dropdown-toggle" data-toggle="dropdown"  >Tất Cả</div>
-              <div className="dropdown-menu bordersearch">
-                <a href="/Shirt"><p>áo</p></a>
-                <a href="trouser"><p>quần</p></a>
-                <a href="vay"><p>váy</p></a>
-              </div>
-              <div className="col-9 ">
-                <form action="search" className="row">
-                  <div className="col-9">
-                    <input type="text" className="form-control-plaintext" ref="search"  id="search" placeholder="search" onKeyDown={this.handleKeyDown}></input>
-                  </div>
-                  <div className="col-3 cu">
-                    <a href="search" className=""><button type="button" className="btn btn-outline button-search" onClick={this.search.bind(this)}><i className="fas fa-search"></i></button></a>
-                  </div>
-                </form>
+      <div className="container">
+          <div className="row ">
+            <div className="col-6">
+              <a href="/"><img src="http://localhost:4000/logo"  className="logo" alt="a"></img></a>
+            </div>
+            <div className="col-3 center formsearch border-bottom1">
+              <div className="row" >
+                <div className="col-3 cu dropdown-toggle" data-toggle="dropdown"  >Tất Cả</div>
+                <div className="dropdown-menu bordersearch">
+                  <a href="/Shirt"><p>áo</p></a>
+                  <a href="trouser"><p>quần</p></a>
+                  <a href="vay"><p>váy</p></a>
+                </div>
+                <div className="col-9 ">
+                  <form action="search" className="row">
+                    <div className="col-9">
+                      <input type="text" className="form-control-plaintext" ref="search"  id="search" placeholder="search" onKeyDown={this.handleKeyDown}></input>
+                    </div>
+                    <div className="col-3 cu">
+                      <a href="search" className=""><button type="button" className="btn btn-outline button-search" onClick={this.search.bind(this)}><i className="fas fa-search"></i></button></a>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-3 left shop">
-            <a href="/cart">
-              <div className="row " >
-                <div className="col-8 shop-div">
-                  <i className="fas fa-shopping-cart size50 iconshop"></i>
-                  <p className="shop-value">{this.state.soluong}</p>
+            <div className="col-3 left shop">
+              <a href="/cart">
+                <div className="row " >
+                  <div className="col-8 shop-div">
+                    <i className="fas fa-shopping-cart size50 iconshop"></i>
+                    <p className="shop-value">{this.state.soluong}</p>
+                  </div>
+                  <div className="col-4 shop-div">
+                    <p className="shop-div-p">Giỏ Hàng</p>
+                    <p> {this.state.tong} đ</p>
+                  </div>
                 </div>
-                <div className="col-4 shop-div">
-                  <p className="shop-div-p">Giỏ Hàng</p>
-                  <p> {this.state.tong} đ</p>
-                </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
       </div>

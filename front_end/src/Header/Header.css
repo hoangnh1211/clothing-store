@@ -1,7 +1,7 @@
 .header-bottom{
     /* margin: 0px; */
-    margin-left:15% ;
-    margin-right: 15%;
+    /* margin-left:15% ;
+    margin-right: 15%; */
 }
 .header-bottom .col-3,.header-bottom .col-9{
     padding: 0px;
@@ -119,6 +119,7 @@ cursor:pointer;
     min-width: 20px;
     background-color:#fc7070 ;
     color: white;
+
     text-align: center;
     padding: 3px;
     position: absolute;
@@ -181,8 +182,8 @@ cursor:pointer;
     flex-direction: row-reverse;
   }
 .abc{
-    margin-left:15% ;
-    margin-right:15% ;
+    /* margin-left:15% ;
+    margin-right:15% ; */
 }
 a {
     color: black;

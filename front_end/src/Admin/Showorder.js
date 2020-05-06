@@ -63,7 +63,7 @@ class Showorder extends Component{
                     // console.log(index);
                     var link='/product/'+menu.Link
                     return (
-                        <div className="row tb1top" >
+                        <div className="row tb1top" key={menu.time} >
                             <div className="col-7 row clear">
                                 <div className="col-3"><a href={link}><img width="80px" alt="anh" src={"http://localhost:4000/anh/"+menu.Link+'_1'}></img></a></div>
                                 <div className="col"></div>

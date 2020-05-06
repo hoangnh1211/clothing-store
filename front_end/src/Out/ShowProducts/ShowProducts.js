@@ -3,7 +3,7 @@ import Frame from '../Frame/Frame';
 import './ShowProducts.css'
 import '../../hover.css'
 import Axios from 'axios';
-import { Redirect } from 'react-router';
+// import { Redirect } from 'react-router';
 
 // import axios from "axios"
 class ShowProducts extends Component{
@@ -15,7 +15,7 @@ class ShowProducts extends Component{
             pageNumbers:1,
             tech: 'ten-az',
             data:{},datas:'',data1:[],
-            loading:0
+            loading:0,true:0
         };
       }
     changedata(){
@@ -69,10 +69,9 @@ class ShowProducts extends Component{
         this.setState({
           tech: e.target.value
         })
-        return(
-            <Redirect to="/"></Redirect>
-        )
-        
+        // var match=this.props.match.path
+        window.location = this.props.match.path+"#1";
+        // console.log(match)
       }
     changepage=(pageNumbers)=>{
         this.setState({
@@ -119,7 +118,10 @@ class ShowProducts extends Component{
         }
         return result;
     }
-    scrollToTop() {
+    scrollToTop=()=> {
+        this.setState({
+            true:1
+        })
         window.scrollTo({
           top: 0,
           behavior: "smooth"
@@ -153,7 +155,6 @@ class ShowProducts extends Component{
         //     }     
         // }
          
-        
         var d=this.state.newsPerPage;
         if (this.state.data !== undefined) length=this.state.data.length;
         
@@ -183,7 +184,7 @@ class ShowProducts extends Component{
                     <ul className="col ">
                     {this.Showpage(this.state.pageNumbers,abc1)}
                     </ul>
-                    <select id="lang" className="col-2 order-12" onChange={this.handleChange.bind(this)} value={this.state.tech}>
+                    <select id="lang" className="col-2 order-12" onChange={this.handleChange.bind(this)} value={this.state.tech} >
                         <option value="ten-az" >Tên : A ---> Z</option>
                         <option value="ten-za">Tên : Z ---> A</option>
                         <option value="giathap">Giá : Thấp Đến Cao</option>

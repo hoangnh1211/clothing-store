@@ -10,13 +10,19 @@ class Search extends Component{
             name:'',
             currentPage:1,
             newsPerPage:9,
-            pageNumbers:1
+            pageNumbers:1,
+            abc:""
         };
       }
       componentDidMount() {
         axios.get('/search1')
         .then(res=>{
-        //   console.log(res.data);
+          console.log(res.data);
+          if (res.data[0]===undefined){
+              this.setState({
+                  abc:"không có sản phẩm nào"
+              })
+          }
           this.setState({
             data:res.data
         });
@@ -86,6 +92,17 @@ class Search extends Component{
           behavior: "smooth"
         });
       }
+    show1=(abc1)=>{
+        if (this.state.abc!=="không có sản phẩm nào")
+            return(
+                <div className="page row">
+                    <span className="col-3" >Trang {this.state.currentPage} trên tổng số {this.state.pageNumbers} :</span>
+                    <ul className="col ">
+                    {this.Showpage(this.state.pageNumbers,abc1)}
+                    </ul>
+                </div>
+            )
+    }
     render(){
         // console.log(this.state.data)
         var match=this.props;
@@ -114,24 +131,14 @@ class Search extends Component{
         return(
             <div className="shirt">
                 <pre className="color-darkgray">HOME <i className="fas fa-arrow-right color-black"></i> <b className="color-black"> Search</b>  </pre>
-                <p className="size-20"><b>Kết quả tìm kiếm cho " {this.state.name} "</b></p>
+                <p className="size-20"><b>Kết quả tìm kiếm cho " {this.state.name} " : {this.state.abc}</b></p>
+                {this.show1(abc1)}
                 
-                <div className="page row">
-                    <span className="col-3" >Trang {this.state.currentPage} trên tổng số {this.state.pageNumbers} :</span>
-                    <ul className="col ">
-                    {this.Showpage(this.state.pageNumbers,abc1)}
-                    </ul>
-                </div>
                 <div className=" flex-container ">
                     {/* <Frame className="flex-left"  anh="111" ten="Váy đầm trắng" gia="320.000"  ></Frame> */}
                     {this.Show(this.state.data,match,this.state.currentPage)}
                 </div>
-                <div className="page row">
-                    <span className="col-3" >Trang {this.state.currentPage} trên tổng số {this.state.pageNumbers} :</span>
-                    <ul className="col ">
-                    {this.Showpage(this.state.pageNumbers,abc1)}
-                    </ul>
-                </div>
+                {this.show1(abc1)}
             </div>
         
         )

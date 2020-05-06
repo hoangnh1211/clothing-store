@@ -8,18 +8,18 @@ var LocalStrategy = require('passport-local').Strategy;
 let multer = require("multer");
 let path = require("path");
 let dayjs = require("dayjs")
-var config = {
-    user: 'hoanganh1',
-    password: 'nhatle12',
-    server: 'localhost',
-    database: 'hoanganh'
-};
-var config1 = {
-    user: 'hoanganh1',
-    password: 'nhatle12',
-    server: 'localhost',
-    database: 'anh'
-};
+// var config = {
+//     user: 'hoanganh1',
+//     password: 'nhatle12',
+//     server: 'localhost',
+//     database: 'hoanganh'
+// };
+// var config1 = {
+//     user: 'hoanganh1',
+//     password: 'nhatle12',
+//     server: 'localhost',
+//     database: 'anh'
+// };
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize({
     dialect: 'mssql',
@@ -27,7 +27,7 @@ const sequelize = new Sequelize({
     username: 'hoanganh1',
     host: 'localhost',
     port: '1433',
-    password: 'nhatle12',
+    password: 'hoanganh12',
     logging: true,
 })
 var LocalStrategy = require('passport-local').Strategy;
@@ -88,6 +88,7 @@ app.get("/datashow",(req,res)=>{
         })
     })
 })
+
 app.post("/data",(req,res)=>{
     var body=req.body
     console.log(body)
@@ -123,11 +124,12 @@ app.post('/datageneral', function (req, res) {
         if (i!==(body.length-1)){
             sql=sql+"iddetailedcategory="+body[i].id+" or "
         } else {
-            sql=sql+"iddetailedcategory="+body[i].id+") "
-            sql=sql+order
+            sql=sql+"iddetailedcategory="+body[i].id
             // console.log(order)
         }
     }
+    sql=sql+' )and active=1'
+    sql=sql+order
     console.log(sql)
     sequelize.query(sql, { type: sequelize.QueryTypes.SELECT})
     .then(users => {
@@ -308,7 +310,23 @@ app.post('/loginadmin', (req, res)=> {
     })
     
 });
-
+app.post('/searchP',(req,res)=>{
+    var body=req.body;
+    var abc=parseInt(body.search);
+    // console.log(abc)
+    if (isNaN(body.search)){
+        sequelize.query("  select * from Products where (Name like '%"+body.search+"%' or name_kodau like '%"+body.search+"%')",{type:sequelize.QueryTypes.SELECT})
+        .then(data=>{
+            res.send(data)
+        })
+    } else {
+        sequelize.query("  select * from Products where (id="+abc+")",{type:sequelize.QueryTypes.SELECT})
+        .then(data=>{
+            res.send(data)
+        })
+    }
+    
+})
 app.post('/search',(req,res)=>{
 
      search=req.body.search;
@@ -326,11 +344,11 @@ app.post('/search',(req,res)=>{
     })
     app.get('/search1', (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-        sequelize.query("select * from products where ( Name LIKE N'%"+search+"%' or name_kodau like N'%"+search+"%');", { type: sequelize.QueryTypes.SELECT})
+        sequelize.query("select * from products where ( Name LIKE N'%"+search+"%' or name_kodau like N'%"+search+"%' )and active=1;", { type: sequelize.QueryTypes.SELECT})
         .then(users => {
             // console.log(search)
             if (users) return res.send(users) 
-            else res.send('');
+            else res.send('ko co');
         
         })
     
