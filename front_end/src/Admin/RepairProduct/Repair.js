@@ -37,8 +37,8 @@ class Repair extends Component{
        
         // console.log(name)   
         axios.post("/data",{name:name}).then(res=>{
-            axios.post("/datageneral",{name:res.data,order:"order by Name"}).then(res => {
-                // console.log(this.props.datas,res.data);
+            axios.post("/datageneral1",{name:res.data,order:"order by Name"}).then(res => {
+                console.log(res.data);
                 this.setState({
                   data:res.data,loading:1
                 });
@@ -60,20 +60,16 @@ class Repair extends Component{
     active(id,active,index){
         axios.post("/activeP",{id:id,active:active})
         .then(res=>{
-            axios.get('/products')
-                .then(res=>{
-                console.log(res.data);
-                this.setState({
-                    data:res.data,loading:1
-                });
-                })
-                
-            }
-        )
+            var data=this.state.data;
+            data[index].active=res.data.active
+            this.setState({
+                data:data
+            })
+         }   )
     }
     search=(e)=>{
         if (e.key === 'Enter') {
-            console.log(this.state.search)
+            // console.log(this.state.search)
             axios.post('/searchP',{search:this.state.search}).then(res=>{
                 console.log(res.data)
                 this.setState({

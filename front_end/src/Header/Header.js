@@ -20,7 +20,6 @@ class Header extends Component {
       soluong:0,
       link:'login1',
       search:[],
-      
     }
  }
 
@@ -98,7 +97,10 @@ Show = (menus,name) => {
   .catch(err => console.log(err))
 }
  logout(){
-  axios.get('/logout').then(res=>console.log(res))
+  axios.get('/logout').then(res=>{
+  window.location.reload()
+
+  })
   .catch(err=>console.log(err))
  }
    create1(){

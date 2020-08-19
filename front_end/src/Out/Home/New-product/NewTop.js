@@ -80,7 +80,7 @@ class NewTop extends Component{
     render(){
         return(
             <div className="new-top">
-                <p className="wow animated fadeInDown">Sản Phẩm Thịnh Hành</p>
+                <p className="wow animated fadeInDown">Sản Phẩm Bán Chạy nhất</p>
                 
                 <div id="carouselExampleInterval" className="carousel slide" data-ride="carousel">
                     <div className="carousel-inner">

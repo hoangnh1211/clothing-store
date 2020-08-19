@@ -1,0 +1,20 @@
+.tex{
+    width: 100%;
+}
+.cmt{
+    padding: 20px;
+}
+.cmt i{
+    font-size: 30px;
+    position: absolute;
+}
+.cmt1 {
+    margin-left: 50px;
+}
+.cmt h5{
+    margin-left: 20px;
+}
+.cmt span{
+    margin-left: 20px;
+    color: silver;
+}

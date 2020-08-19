@@ -10,9 +10,9 @@ let path = require("path");
 let dayjs = require("dayjs")
 // var config = {
 //     user: 'hoanganh1',
-//     password: 'nhatle12',
+//     password: 'hoanganh23',
 //     server: 'localhost',
-//     database: 'hoanganh'
+//     database: 'chat'
 // };
 // var config1 = {
 //     user: 'hoanganh1',
@@ -20,6 +20,16 @@ let dayjs = require("dayjs")
 //     server: 'localhost',
 //     database: 'anh'
 // };
+const Sequelize1 = require('sequelize')
+const sequelize1 = new Sequelize1({
+    dialect: 'mssql',
+    database: 'book',
+    username: 'hoanganh1',
+    host: 'localhost',
+    port: '1433',
+    password: 'hoanganh23',
+    logging: true,
+})
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize({
     dialect: 'mssql',
@@ -27,7 +37,7 @@ const sequelize = new Sequelize({
     username: 'hoanganh1',
     host: 'localhost',
     port: '1433',
-    password: 'hoanganh12',
+    password: 'hoanganh23',
     logging: true,
 })
 var LocalStrategy = require('passport-local').Strategy;
@@ -38,8 +48,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
-
+app.get('/chat',(req,res)=>{
+   sequelize1.query("select * from chat",{type: sequelize1.QueryTypes.SELECT})
+   .then (data=>{
+        res.send(data)
+   })
+})
+app.post('/chat1',(req,res)=>{
+    var data=req.body
+    console.log(data)
+    sequelize1.query(`insert into chat values('${data.name}','${data.sentence}')`)
+ })
 app.get('/shirt/abcabc', function (req, res, next) {
     var body = req.body;
     // console.log(body);
@@ -137,6 +156,30 @@ app.post('/datageneral', function (req, res) {
     res.send(users)
     })
 });
+app.post('/datageneral1', function (req, res) {
+    var body=req.body.name
+    // console.log(body)
+    var order
+    if (req.body.order!==undefined) order=req.body.order
+    console.log(req.body)
+    var sql="select * from products where (";
+    for (var i=0;i<body.length;i++){
+        if (i!==(body.length-1)){
+            sql=sql+"iddetailedcategory="+body[i].id+" or "
+        } else {
+            sql=sql+"iddetailedcategory="+body[i].id
+            // console.log(order)
+        }
+    }
+    sql=sql+' )'
+    sql=sql+order
+    console.log(sql)
+    sequelize.query(sql, { type: sequelize.QueryTypes.SELECT})
+    .then(users => {
+    // console.log(users)
+    res.send(users)
+    })
+});
 
 app.get('/products', function (req, res) {
     sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.iddetailedcategory,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id ;", { type: sequelize.QueryTypes.SELECT})
@@ -147,7 +190,7 @@ app.get('/products', function (req, res) {
 });
 app.post("/getproduct",function(req,res){
     var link=req.body.link;
-    sequelize.query("select Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id where Link='"+link+"'", { type: sequelize.QueryTypes.SELECT})
+    sequelize.query("select Products.active,Products.id,Products.Name,Products.Price,Products.NewPrice,Products.Link,Products.Description,Products.name_kodau,kho.sizeS,kho.sizeM,kho.sizeL from Products inner join kho on kho.id=Products.id where Link='"+link+"'", { type: sequelize.QueryTypes.SELECT})
     .then(user=>{
         res.send(user)
     })
@@ -336,7 +379,7 @@ app.post('/search',(req,res)=>{
         // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
         // console.log("b1:",search)
         if (search)  {
-            res.send(search) 
+            res.send(search)    
             // console.log("a:",search)
             return
         }
@@ -424,9 +467,7 @@ app.post("/add",(req,res)=>{
         var sql1 = "insert into order2 values (" + "N'" + req.session.username + "'" + "," + "'" + body.id + "'" + "," + "'" + body.soluong + "'," + "'" + body.size + "'" +");" ;
         sequelize.query(sql1);
     }
-    
     })
-    
 })
 let diskStorage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -608,21 +649,39 @@ app.post("/addimg1",(req,res)=>{
         if (error) {
           return res.send(`Error when trying to upload: ${error}`);
         }
-        console.log(req.files)
-        
-        req.files.map((menu, index) => {
-            // res.sendFile(path.join(`${__dirname}/anh/${menu.filename}`));
-            var length=menu.filename.length;
-            var abc=menu.filename.slice(0,length-3);
-            var path = '/anh/';
-            var    path1 = path + abc;
-            var link1 = '/anh/' + menu.filename;
-            app.get(path1, function (req, res) {
-                res.sendFile(__dirname + link1);
-            })
-        })
-        
+        console.log(req.files)      
       });
+})
+app.post("/addimg2",(req,res)=>{
+    var Link=req.body.link
+    var path = '/anh/';
+        var    path1 = path + Link+'_1';
+        var    path2 = path + Link+'_2';
+        var    path3 = path + Link+'_3';
+        var    path4 = path + Link+'_4';
+        var    path5 = path + Link+'_5';
+        var link1 = '/anh/' + Link +'_1'+ '.jpg';
+        var link2 = '/anh/' + Link +'_2'+ '.jpg';
+        var link3 = '/anh/' + Link +'_3'+ '.jpg';
+        var link4 = '/anh/' + Link +'_4'+ '.jpg';
+        var link5 = '/anh/' + Link +'_5'+ '.jpg';
+
+        app.get(path1, function (req, res) {
+            res.sendFile(__dirname + link1);
+        })
+        app.get(path2, function (req, res) {
+            res.sendFile(__dirname + link2);
+        })
+        app.get(path3, function (req, res) {
+            res.sendFile(__dirname + link3);
+        })
+        app.get(path4, function (req, res) {
+            res.sendFile(__dirname + link4);
+        })
+        app.get(path5, function (req, res) {
+            res.sendFile(__dirname + link5);
+        })
+
 })
 app.post("/deleteP",(req,res)=>{
     var body=req.body
@@ -649,7 +708,7 @@ app.post("/activeP",(req,res)=>{
     console.log(body)
     var active=Math.abs(body.active-1);
     sequelize.query("update Products set active="+active+" where id="+body.id)
-    res.send("thanh cong")
+    res.send({active:active})
 
 })
 app.post('/update', (req, res)=> {
@@ -667,6 +726,15 @@ app.post('/update', (req, res)=> {
         }
     })
 });
+app.get('/cmt1',(req,res)=>{
+    sequelize.query('SELECT * from cmt',{ type: sequelize.QueryTypes.SELECT})
+    .then(value=>res.send(value))
+})
+app.post('/cmt',(req,res)=>{
+    let body=req.body
+    let sql=`insert into cmt values(${body.id},'${body.name}','${body.sentence}',GETDATE());`
+    sequelize.query(sql);
+})
 app.post('/thanhtoan', (req, res)=> {
     body=req.body.data;
     console.log(body)

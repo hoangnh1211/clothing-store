@@ -4,6 +4,7 @@ import axios from "axios";
 import ReactImageZoom from 'react-image-zoom';
 import { Link } from 'react-router-dom';
 import '../../loading.css'
+import UserCmt from '../UserCmt/UserCmt';
 class Products extends Component{
     constructor(props) {
         super(props);
@@ -33,7 +34,7 @@ class Products extends Component{
         var {match}=this.props;
         axios.post("/getproduct",{link:match.params.name}).then(
             res=>{
-                // console.log(res.data[0])
+                console.log(res.data[0])
                 if (res.data[0]!==undefined){
                     this.setState({
                         data:res.data[0],sl:res.data[0].sizeS  ,loading:1  
@@ -153,9 +154,14 @@ class Products extends Component{
                 </div>
              )
         } else{
+            if(this.state.data.active===0){
+                    return(
+                        <h1 className="a404">404</h1>
+                    )
+            } else  
         return(
             <div className="product">
-                <pre className="color-darkgray">HOME  <i className="fas fa-arrow-right color-black"></i> <b className="color-black"> {data.Name} </b></pre>
+                <pre className="color-darkgray"><a href="/">HOME</a>  <i className="fas fa-arrow-right color-black"></i> <b className="color-black"> {data.Name} </b></pre>
                 <div className="boder-product">
                     <div className=" row ">
                         <div className=" col-6 ">
@@ -231,16 +237,8 @@ class Products extends Component{
                     </div>
                     <div className="aaa2"><p>{data.Description}</p></div>
                 </div>
-                <div className="product-buttom">
-                    <div className="aaa">
-                        <div className="aaa1">
-                            <p>ĐÁNH GIÁ SẢN PHẨM</p>
-                        </div>
-                    </div>
-                    <div className="user">
-                    <i className="far fa-user"></i>
-                    </div>
-                </div>
+                
+                {/* <UserCmt id={data.id}></UserCmt> */}
             </div>
         )}
 }}

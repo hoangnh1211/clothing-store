@@ -29,6 +29,12 @@ class Admin extends Component{
             })
         })
     }
+    logout(){
+        axios.get('/logoutadmin').then(res=>{console.log(res)
+            window.location.reload()   
+        })
+        .catch(err=>console.log(err))
+       }
     render(){
         if (this.state.name === 'chua dang nhap') {
             return <Redirect to="/"/>
@@ -53,8 +59,8 @@ class Admin extends Component{
                         <Link to='/admin'><li><i className="fas fa-chart-bar"></i>Dashboard</li></Link>
                         <Link to='/admin/addproduct'><li><i className="fas fa-plus"></i>Thêm sản phẩm</li></Link>
                         <Link to='/admin/repairproduct'><li><i className="fas fa-cog"></i>Sửa sản phẩm</li></Link>
-                        <Link to='/admin/order'><li><i className="fas fa-history"></i>Đơn hàng</li></Link>
-                        <Link to='/admin/order_confirm'><li><i className="fas fa-shopping-cart"></i>Đơn hàng Xử Lý</li></Link>
+                        <Link to='/admin/order'><li><i className="fas fa-history"></i>Đơn hàng đã giao</li></Link>
+                        <Link to='/admin/order_confirm'><li><i className="fas fa-shopping-cart"></i>Đơn hàng chờ Xử Lý</li></Link>
                     </ul>
                 </div>
                 {/* <Route path='/admin' exact component={HomeAdmin}></Route> */}

@@ -107,7 +107,16 @@ class Addproduct extends Component{
                 authorization:'hoanganh'
             }
         }
-        
+        axios.post('/addimg1',formData,config)
+        .then(res=>{
+            console.log(res.data);
+        })
+        .catch(err => console.log(err))
+        axios.post('/addimg2',{link:Link})
+        .then(res=>{
+            console.log(res.data);
+        })
+        .catch(err => console.log(err)) 
         axios.post('/addproduct',{Name:Name,Price:Price,NewPrice:NewPrice,Link:Link,Description:Description,name_kodau:name_kodau,id:id})
         .then(res=>{
             console.log(res.data);
@@ -122,11 +131,7 @@ class Addproduct extends Component{
             }
         })
         .catch(err => console.log(err))
-        axios.post('/addimg1',formData,config,{Name:Name,Price:Price,NewPrice:NewPrice,Link:Link,Description:Description,name_kodau:name_kodau})
-        .then(res=>{
-            console.log(res.data);
-        })
-        .catch(err => console.log(err))       
+               
        } 
        onChange =(e)=>{
         // console.log(e.target)

@@ -1,0 +1,33 @@
+let diskStorage = multer.diskStorage({
+    destination: (req, file, callback) => {
+      callback(null, "anh"); // nơi lưu ảnh khi tải từ client về
+    },
+    filename: (req, file, callback) => {
+      let math = ["image/png", "image/jpeg"]; // định dang file truyền vào
+      if (math.indexOf(file.mimetype) === -1) {
+        let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png.`;
+        return callback(errorMess, null);
+      }
+      let filename = `${file.originalname}`; // tên khi lưu
+      callback(null, filename);
+    }
+  });
+  
+  let uploadFile = multer({storage: diskStorage}).array("file"); // array là t lưu 1 list nhiều ảnh luôn
+  app.post("/addimg1",(req,res)=>{
+    uploadFile(req, res, (error) => {
+        // Nếu có lỗi thì trả về lỗi cho client.
+        // Ví dụ như upload một file không phải file ảnh theo như cấu hình của mình bên trên
+        if (error) {
+          return res.send(`Error when trying to upload: ${error}`);
+        }
+        console.log(req.files)      
+      });
+    
+})
+var    path5 = path + Link+'_5';// link api
+var link5 = '/anh/' + Link +'_5'+ '.jpg';// link tới anh
+
+app.get(path5, function (req, res) {
+    res.sendFile(__dirname + link5);
+  })
